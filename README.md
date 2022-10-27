@@ -6,3 +6,4 @@
 - Entity Framework Core 6
 - PostgreSQL
 - AutoMapper
+- Swashbuckle
