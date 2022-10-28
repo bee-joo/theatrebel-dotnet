@@ -5,7 +5,7 @@ namespace theatrebel.Services.Interfaces
 {
     public interface IPlayService
     {
-        Task<PlayView?> GetPlay(long id);
+        Task<PlayView> GetPlay(long id);
         Task<List<EmbeddedWriterView>?> GetPlaysWriters(long id);
         Task<List<ReviewView>> GetPlaysReviews(long id);
         Task<PlayView?> AddPlay(PlayDTO playDto);

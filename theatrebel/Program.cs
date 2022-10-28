@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using theatrebel;
 using theatrebel.Data.Profiles;
+using theatrebel.Exceptions;
 using theatrebel.Repositories;
 using theatrebel.Repositories.Interfaces;
 using theatrebel.Services;
@@ -32,6 +34,11 @@ services.AddAutoMapper(
     typeof(ReviewProfile)
 );
 
+services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -39,6 +46,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 

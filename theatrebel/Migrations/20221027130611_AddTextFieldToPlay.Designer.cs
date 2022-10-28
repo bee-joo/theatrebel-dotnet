@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using theatrebel;
@@ -11,9 +12,10 @@ using theatrebel;
 namespace theatrebel.Migrations
 {
     [DbContext(typeof(TheatrebelContext))]
-    partial class TheatrebelContextModelSnapshot : ModelSnapshot
+    [Migration("20221027130611_AddTextFieldToPlay")]
+    partial class AddTextFieldToPlay
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,10 +64,6 @@ namespace theatrebel.Migrations
                         .HasMaxLength(2000)
                         .HasColumnType("character varying(2000)")
                         .HasColumnName("description");
-
-                    b.Property<bool>("HasText")
-                        .HasColumnType("boolean")
-                        .HasColumnName("has_text");
 
                     b.Property<string>("Name")
                         .IsRequired()

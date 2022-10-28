@@ -1,7 +1,7 @@
 ﻿namespace theatrebel.Exceptions
 {
-    public class HttpNotFoundException : HttpException
+    public class NotFoundException : HttpException
     {
-        public HttpNotFoundException(string message) : base(message, System.Net.HttpStatusCode.NotFound) { }
+        public NotFoundException(string message) : base(message, System.Net.HttpStatusCode.NotFound) { }
     }
 }

@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using theatrebel.Data.DTOs;
 using theatrebel.Data.Models;
 using theatrebel.Data.Views;
-using theatrebel.Repositories;
+using theatrebel.Exceptions;
 using theatrebel.Repositories.Interfaces;
 using theatrebel.Services.Interfaces;
 
@@ -27,9 +26,13 @@ namespace theatrebel.Services
             _mapper = mapper;
         }
 
-        public async Task<PlayView?> GetPlay(long id)
+        public async Task<PlayView> GetPlay(long id)
         {
             var play = await _playRepository.FindByIdAsync(id);
+            if (play == null)
+            {
+                throw new NotFoundException($"Play with id {id} not found!");
+            }
             var playView = _mapper.Map<PlayView>(play);
 
             return playView;
@@ -53,6 +56,12 @@ namespace theatrebel.Services
         public async Task<PlayView?> AddPlay(PlayDTO playDto)
         {
             var play = _mapper.Map<Play>(playDto);
+            
+            if (play.Text != null)
+            {
+                play.HasText = true;
+            }
+
             var result = _playRepository.Save(play);
             await _playRepository.SaveChangesAsync();
 
@@ -65,14 +74,14 @@ namespace theatrebel.Services
 
             if (reviewDto.PlayId != playId)
             {
-                throw new Exception("Error");
+                throw new BadRequestException("Ids of play are not equal");
             }
 
             var review = _mapper.Map<Review>(reviewDto);
             var result = _reviewRepository.Save(review);
             await _reviewRepository.SaveChangesAsync();
 
-            return _mapper.Map<ReviewView>(result) ?? throw new Exception("Error");
+            return _mapper.Map<ReviewView>(result);
         }
 
         public async Task<bool> DeletePlay(long id)

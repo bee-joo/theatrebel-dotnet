@@ -33,8 +33,12 @@ namespace theatrebel
                 entity.Property(e => e.Origname)
                     .HasMaxLength(255);
 
+                entity.Property(e => e.Text);
+
                 entity.HasMany(e => e.Writers)
                     .WithMany(w => w.Plays);
+
+                entity.Property(e => e.HasText);
             });
 
             modelBuilder.Entity<Review>(entity =>
