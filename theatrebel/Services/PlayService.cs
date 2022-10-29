@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using theatrebel.Data.DTOs;
 using theatrebel.Data.Models;
+using theatrebel.Data.Parameters;
 using theatrebel.Data.Views;
 using theatrebel.Exceptions;
 using theatrebel.Repositories.Interfaces;
@@ -101,6 +102,14 @@ namespace theatrebel.Services
             }
 
             return false;
+        }
+
+        public async Task<List<EmbeddedPlayView>> SearchPlays(PlayParameters parameters, Pagination pagination)
+        {
+            var result = await _playRepository.FindByParamsAsync(parameters, pagination);
+            return result
+                .Select(p => _mapper.Map<EmbeddedPlayView>(p))
+                .ToList();
         }
     }
 }
