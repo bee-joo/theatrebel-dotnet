@@ -1,6 +1,6 @@
 ﻿namespace theatrebel.Repositories.Interfaces
 {
-    public interface IRepositoryBase<T>
+    public interface IRepositoryBase<T> 
     {
         Task<T?> FindByIdAsync(long id);
         Task<IList<T>> FindAllAsync();
