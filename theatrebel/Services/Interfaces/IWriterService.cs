@@ -6,8 +6,8 @@ namespace theatrebel.Services.Interfaces
 {
     public interface IWriterService
     {
-        Task<WriterView?> GetWriter(long id);
-        Task<EmbeddedWriterView?> AddWriter(WriterDTO writerDto);
+        Task<WriterView> GetWriter(long id);
+        Task<EmbeddedWriterView> AddWriter(WriterDTO writerDto);
         Task<List<EmbeddedPlayView>> GetWritersPlays(long id);
         Task<bool> DeleteWriter(long id);
     }
