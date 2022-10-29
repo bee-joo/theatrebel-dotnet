@@ -26,6 +26,7 @@ namespace theatrebel.Exceptions
                 if (exception is HttpException e)
                 {
                     response.StatusCode = (int)e.StatusCode;
+                    _logger.LogError(exception, exception.Message);
                     await response.WriteAsJsonAsync(new ErrorResponse(e));
                 }
                 else
