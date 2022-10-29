@@ -73,6 +73,19 @@ namespace theatrebel.Services
             return _mapper.Map<PlayView>(result);
         }
 
+        public async Task<EmbeddedPlayView> UpdatePlay(long id, PlayUpdateDTO playDto)
+        {
+            var play = await _playRepository.FindByIdAsync(id);
+            if (play == null)
+            {
+                throw new NotFoundException($"Play with id {id} not found");
+            }
+
+            _mapper.Map(playDto, play);
+            await _playRepository.SaveChangesAsync();
+            return _mapper.Map<EmbeddedPlayView>(play);
+        }
+
         public async Task<ReviewView> AddReview(long playId, ReviewDTO reviewDto)
         {
             reviewDto.PlayId ??= playId;

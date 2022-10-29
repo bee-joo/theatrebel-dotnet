@@ -11,6 +11,7 @@ namespace theatrebel.Services.Interfaces
         Task<List<EmbeddedWriterView>?> GetPlaysWriters(long id);
         Task<List<ReviewView>> GetPlaysReviews(long id);
         Task<PlayView> AddPlay(PlayDTO playDto);
+        Task<EmbeddedPlayView> UpdatePlay(long id, PlayUpdateDTO playDto);
         Task<ReviewView> AddReview(long playId, ReviewDTO reviewDto);
         Task<bool> DeletePlay(long id);
     }

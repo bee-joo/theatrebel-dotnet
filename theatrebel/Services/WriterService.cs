@@ -32,6 +32,19 @@ namespace theatrebel.Services
             return _mapper.Map<EmbeddedWriterView>(result);
         }
 
+        public async Task<EmbeddedWriterView> UpdateWriter(long id, WriterUpdateDTO writerDto)
+        {
+            var writer = await _writerRepository.FindByIdAsync(id);
+            if (writer == null)
+            {
+                throw new NotFoundException($"Writer with id {id} not found");
+            }
+            
+            _mapper.Map(writerDto, writer);
+            await _writerRepository.SaveChangesAsync();
+            return _mapper.Map<EmbeddedWriterView>(writer);
+        }
+
         public async Task<bool> DeleteWriter(long id)
         {
             if (_writerRepository.DeleteById(id))
