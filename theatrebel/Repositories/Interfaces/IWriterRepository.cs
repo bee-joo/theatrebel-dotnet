@@ -1,4 +1,5 @@
 ﻿using theatrebel.Data.Models;
+using theatrebel.Repositories.Interfaces.Base;
 
 namespace theatrebel.Repositories.Interfaces
 {
