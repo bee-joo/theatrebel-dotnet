@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using theatrebel.Data.Models;
-using theatrebel.Repositories.Interfaces;
+using theatrebel.Repositories.Interfaces.Base;
 
 namespace theatrebel.Repositories
 {
