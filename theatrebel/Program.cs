@@ -26,6 +26,7 @@ services.AddScoped<IReviewRepository, ReviewRepository>();
 // Inject services
 services.AddScoped<IPlayService, PlayService>();
 services.AddScoped<IWriterService, WriterService>();
+services.AddScoped<IReviewService, ReviewService>();
 
 // Inject profiles
 services.AddAutoMapper(
