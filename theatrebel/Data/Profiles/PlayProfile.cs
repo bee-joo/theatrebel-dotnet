@@ -13,6 +13,9 @@ namespace theatrebel.Data.Profiles
             CreateMap<PlayDTO, Play>()
                 .AfterMap<MapWritersAction>();
 
+            CreateMap<PlayUpdateDTO, Play>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+            
             CreateMap<Play, PlayView>();
             CreateMap<Play, EmbeddedPlayView>();
         }

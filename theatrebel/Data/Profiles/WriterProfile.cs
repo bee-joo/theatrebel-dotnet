@@ -10,6 +10,10 @@ namespace theatrebel.Data.Profiles
         public WriterProfile()
         {
             CreateMap<WriterDTO, Writer>();
+
+            CreateMap<WriterUpdateDTO, Writer>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
             CreateMap<Writer, WriterView>();
             CreateMap<Writer, EmbeddedWriterView>();
         }
