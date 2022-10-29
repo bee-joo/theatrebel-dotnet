@@ -35,7 +35,7 @@ namespace theatrebel.Controllers
         public async Task<ActionResult<List<EmbeddedWriterView>>> GetPlaysWriters(long id)
         {
             var playsWriters = await _playService.GetPlaysWriters(id);
-            if (playsWriters == null || !playsWriters.Any())
+            if (playsWriters == null || playsWriters.Count == 0)
             {
                 return NotFound(new NotFoundResponse($"Play with id {id} or writers not found"));
             }
@@ -47,7 +47,15 @@ namespace theatrebel.Controllers
         [HttpGet("{id}/reviews")]
         [ProducesResponseType(typeof(List<ReviewView>), 200)]
         public async Task<ActionResult<List<ReviewView>>> GetPlaysReviews(long id)
-            => await _playService.GetPlaysReviews(id);
+        {
+            var playsReviews = await _playService.GetPlaysReviews(id);
+            if (playsReviews == null || playsReviews.Count == 0)
+            {
+                return NotFound(new NotFoundResponse($"Play with id {id} or reviews not found"));
+            }
+
+            return playsReviews;
+        }
 
 
         [HttpPost]
@@ -66,12 +74,11 @@ namespace theatrebel.Controllers
         [ProducesResponseType(typeof(ReviewView), 200)]
         public async Task<ActionResult<ReviewView>> AddReview(long id, [FromBody] ReviewDTO reviewDto)
         {
-            var view = await _playService.AddReview(id, reviewDto);
-            if (view == null)
+            if (!ModelState.IsValid)
             {
-                return BadRequest(new BadRequestResponse("Invalid data"));
+                return BadRequest(new BadRequestResponse(ModelErrors.GetString(ModelState)));
             }
-            return view;
+            return await _playService.AddReview(id, reviewDto);
         }
 
 

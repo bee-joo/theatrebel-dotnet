@@ -3,6 +3,7 @@ using theatrebel.Data.DTOs;
 using theatrebel.Data.Responses;
 using theatrebel.Data.Views;
 using theatrebel.Services.Interfaces;
+using theatrebel.Utility;
 
 namespace theatrebel.Controllers
 {
@@ -20,15 +21,38 @@ namespace theatrebel.Controllers
             _writerService = writerService;
         }
 
+
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(WriterView), 200)]
-        public async Task<ActionResult<WriterView?>> GetWriter(long id)
+        public async Task<ActionResult<WriterView>> GetWriter(long id)
             => await _writerService.GetWriter(id);
+
+
+        [HttpGet("{id}/plays")]
+        [ProducesResponseType(typeof(List<EmbeddedPlayView>), 200)]
+        public async Task<ActionResult<List<EmbeddedPlayView>>> GetWritersPlays(long id)
+        {
+            var writersPlays = await _writerService.GetWritersPlays(id);
+            if (writersPlays == null || writersPlays.Count == 0)
+            {
+                return NotFound(new NotFoundResponse($"Writer with id {id} or plays not found"));
+            }
+
+            return writersPlays;
+        }
+
 
         [HttpPost]
         [ProducesResponseType(typeof(EmbeddedWriterView), 200)]
-        public async Task<ActionResult<EmbeddedWriterView?>> AddWriter([FromBody] WriterDTO writerDto)
-            => await _writerService.AddWriter(writerDto);
+        public async Task<ActionResult<EmbeddedWriterView>> AddWriter([FromBody] WriterDTO writerDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new BadRequestResponse(ModelErrors.GetString(ModelState)));
+            }
+            return await _writerService.AddWriter(writerDto);
+        }
+
 
         [HttpDelete("{id}")]
         [ProducesResponseType(typeof(bool), 200)]
