@@ -54,6 +54,12 @@ namespace theatrebel.Controllers
         }
 
 
+        [HttpPatch("{id}")]
+        [ProducesResponseType(typeof(EmbeddedWriterView), 200)]
+        public async Task<ActionResult<EmbeddedWriterView>> UpdateWriter(long id, WriterUpdateDTO writerDto)
+            => await _writerService.UpdateWriter(id, writerDto);
+
+
         [HttpDelete("{id}")]
         [ProducesResponseType(typeof(bool), 200)]
         public async Task<ActionResult<bool>> DeleteWriter(long id)

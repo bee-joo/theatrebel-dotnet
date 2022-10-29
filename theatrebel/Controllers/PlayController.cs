@@ -40,6 +40,12 @@ namespace theatrebel.Controllers
             => await _playService.GetPlay(id);
 
 
+        [HttpPatch("{id}")]
+        [ProducesResponseType(typeof(EmbeddedPlayView), 200)]
+        public async Task<ActionResult<EmbeddedPlayView>> UpdatePlay(long id, [FromBody] PlayUpdateDTO playDto)
+            => await _playService.UpdatePlay(id, playDto);
+
+
         [HttpGet("{id}/writers")]
         [ProducesResponseType(typeof(List<EmbeddedWriterView>), 200)]
         public async Task<ActionResult<List<EmbeddedWriterView>>> GetPlaysWriters(long id)
