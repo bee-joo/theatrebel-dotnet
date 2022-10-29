@@ -8,6 +8,6 @@ namespace theatrebel.Data.Parameters
         public bool? HasText { get; set; }
 
         [DefaultValue("Name")]
-        public new string? OrderBy { get; set; } = "Name";
+        public new string OrderBy { get; set; } = "Name";
     }
 }
