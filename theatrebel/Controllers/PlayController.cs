@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using theatrebel.Data.DTOs;
+using theatrebel.Data.Parameters;
 using theatrebel.Data.Responses;
 using theatrebel.Data.Views;
 using theatrebel.Services.Interfaces;
@@ -22,6 +23,15 @@ namespace theatrebel.Controllers
             _logger = logger;
             _playService = playService;
         }
+
+
+        [HttpGet]
+        [ProducesResponseType(typeof(List<EmbeddedPlayView>), 200)]
+        public async Task<ActionResult<List<EmbeddedPlayView>>> SearchPlays(
+            [FromQuery] PlayParameters parameters, 
+            [FromQuery] Pagination pagination
+        ) 
+            => await _playService.SearchPlays(parameters, pagination);
 
 
         [HttpGet("{id}")]
