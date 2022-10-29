@@ -53,7 +53,7 @@ namespace theatrebel.Services
                 .Select(r => _mapper.Map<ReviewView>(r)).ToList();
         }
 
-        public async Task<PlayView?> AddPlay(PlayDTO playDto)
+        public async Task<PlayView> AddPlay(PlayDTO playDto)
         {
             var play = _mapper.Map<Play>(playDto);
             
@@ -63,12 +63,16 @@ namespace theatrebel.Services
             }
 
             var result = _playRepository.Save(play);
+            if (result == null)
+            {
+                throw new BadRequestException("Something went wrong with this play");
+            }
             await _playRepository.SaveChangesAsync();
 
-            return _mapper.Map<PlayView>(result) ?? throw new Exception("Error");
+            return _mapper.Map<PlayView>(result);
         }
 
-        public async Task<ReviewView?> AddReview(long playId, ReviewDTO reviewDto)
+        public async Task<ReviewView> AddReview(long playId, ReviewDTO reviewDto)
         {
             reviewDto.PlayId ??= playId;
 
@@ -79,6 +83,10 @@ namespace theatrebel.Services
 
             var review = _mapper.Map<Review>(reviewDto);
             var result = _reviewRepository.Save(review);
+            if (result == null)
+            {
+                throw new BadRequestException("Something went wrong with this review");
+            }
             await _reviewRepository.SaveChangesAsync();
 
             return _mapper.Map<ReviewView>(result);
