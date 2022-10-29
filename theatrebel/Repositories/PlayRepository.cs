@@ -18,7 +18,7 @@ namespace theatrebel.Repositories
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<IList<Play>?> FindByWriterIdAsync(long id)
+        public async Task<IList<Play>> FindByWriterIdAsync(long id)
         {
             return await _context.Plays
                 .Where(p => p.Writers.Any(x => x.Id == id))
